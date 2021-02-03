@@ -7,8 +7,8 @@ Instagram looks frown upon automation so be careful when you use it since the ac
 I cannot take responsibility of consequence made by using this program
 
 ## Installation
-Be sure to add path to your web driver in the code.
-download the code and create .exe file using pyinstaller
+Be sure to add path to your web driver in the code. </br>
+Download the code and create .exe file using pyinstaller
 ```bash
 "pyinstaller onefile --instaBot.py"
 ```
