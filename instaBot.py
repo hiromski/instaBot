@@ -93,7 +93,7 @@ if followOnlyBox.get() == 1:
 if unfollowOnlyBox.get() == 1:
     followOnly = 0
 
-browser = webdriver.Chrome("C:\\Users\\hirom\\webdriver\\chromedriver.exe")
+browser = webdriver.Chrome("path to your web driver")
 browser.implicitly_wait(5)
 
 browser.get('https://www.instagram.com')
