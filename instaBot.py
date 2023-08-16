@@ -4,7 +4,8 @@ from selenium import webdriver
 from selenium.common.exceptions import *
 from sys import exit
 from tkinter import *
-
+from selenium.webdriver.common.by import By
+import time
 
 global userName
 global password
@@ -17,8 +18,8 @@ master.config(background="white")
 
 
 def center(master):
-    w = 280  # width for the Tk root
-    h = 200  # height for the Tk root
+    w = 400  # width for the Tk root
+    h = 300  # height for the Tk root
 
     # get screen width and height
     ws = master.winfo_screenwidth()  # width of the screen
@@ -93,18 +94,20 @@ if followOnlyBox.get() == 1:
 if unfollowOnlyBox.get() == 1:
     followOnly = 0
 
-browser = webdriver.Chrome("path to your web driver")
+browser = webdriver.Chrome()
 browser.implicitly_wait(5)
 
 browser.get('https://www.instagram.com')
 
-username_in = browser.find_element_by_name("username")
-password_in = browser.find_element_by_css_selector("input[name='password']")
+
+username_in = browser.find_element(By.NAME, "username")
+password_in = browser.find_element(By.CSS_SELECTOR, "input[name='password']")
 
 username_in.send_keys(userName)
 password_in.send_keys(password)
 
-login_button = browser.find_element_by_xpath("//button[@type='submit']")
+login_button = browser.find_element(By.XPATH, "//button[@type='submit']");
+
 try:
     login_button.click()
 except WebDriverException as e:
@@ -112,25 +115,25 @@ except WebDriverException as e:
     print(e)
     browser.close()
 
-if browser.find_element_by_xpath('//button[text()="Not Now"]'):
-    saveInfo_button = browser.find_element_by_xpath('//button[text()="Not Now"]')
+if browser.find_element(By.XPATH,'//button[text()="Not Now"]'):
+    saveInfo_button = browser.find_element(By.XPATH,'//button[text()="Not Now"]')
     saveInfo_button.click()
 
-if browser.find_element_by_xpath('//button[text()="Not Now"]'):
-    notification_button = browser.find_element_by_xpath('//button[text()="Not Now"]')
+if browser.find_element(By.XPATH,'//button[text()="Not Now"]'):
+    notification_button = browser.find_element(By.XPATH, '//button[text()="Not Now"]')
     notification_button.click()
 
 if followOnly == 1:
     browser.get('https://www.instagram.com/%s/' % leechAccount)
-    followers_button = browser.find_element_by_xpath('//a[@href="/%s/followers/"]' % leechAccount)
+    followers_button = browser.find_element(By.XPATH,'//a[@href="/%s/followers/"]' % leechAccount)
     followers_button.click()
     sleep(6)
-    fBody = browser.find_element_by_xpath("//div[@class='isgrP']")
+    fBody = browser.find_element(By.XPATH,"//div[@class='isgrP']")
 
     i = 0
     for x in range(int(num_toFollow)):
         try:
-            follow_button = browser.find_element_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
+            follow_button = browser.find_element(By.XPATH,"//button[@class='sqdOP  L3NKy   y3zKF     ']")
         except NoSuchElementException:
             browser.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;',
                                    fBody)
@@ -143,14 +146,14 @@ if followOnly == 1:
 if unFollowOnly == 1:
     browser.get('https://www.instagram.com/japan_2u/')
 
-    followers_button = browser.find_element_by_xpath('//a[@href="/%s/following/"]' % userName)
+    followers_button = browser.find_element(By.XPATH,'//a[@href="/%s/following/"]' % userName)
     followers_button.click()
 
-    fBody = browser.find_element_by_xpath("//div[@class='isgrP']")
+    fBody = browser.find_element(By.XPATH,"//div[@class='isgrP']")
 
     for x in range(int(num_toUnfollow)):
         try:
-            following_button = browser.find_element_by_xpath('//button[text()="Following"]')
+            following_button = browser.find_element(By.XPATH,'//button[text()="Following"]')
         except NoSuchElementException:
             browser.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;',
                                    fBody)
@@ -159,7 +162,7 @@ if unFollowOnly == 1:
         following_button.click()
         sleep(1)
         try:
-            unfollow_button = browser.find_element_by_xpath("//button[@class='aOOlW -Cab_   ']")
+            unfollow_button = browser.find_element(By.XPATH,"//button[@class='aOOlW -Cab_   ']")
         except NoSuchElementException:
             browser.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;',
                                    fBody)
@@ -169,3 +172,4 @@ if unFollowOnly == 1:
         sleep(1)
 
 browser.close()
+browser.quit();
